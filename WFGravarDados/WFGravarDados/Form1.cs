@@ -150,5 +150,20 @@ namespace WFGravarDados
         {
 
         }
+
+        private void LimparCampos()
+        {
+            txtNome.Clear();
+            txtEmail.Clear();
+            txtTelefone.Clear();
+            txtEndereco.Clear();
+            txtCep.Clear();
+            txtBairro.Clear();
+        }
+
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            LimparCampos();
+        }
     }
 }
