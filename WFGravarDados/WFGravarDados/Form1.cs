@@ -17,9 +17,7 @@ namespace WFGravarDados
     public partial class Form1 : Form
     {
         MySqlConnection Conexao;
-        string data_source = "Server=localhost;User=root;Database=db_agenda;Password=@Hendrik1979;";
-
-       
+        string data_source = "Server=localhost;User=root;Database=db_agenda;Password=@Hendrik1979;";      
 
         public Form1()
         {
@@ -35,8 +33,11 @@ namespace WFGravarDados
             lstContatos.Columns.Add("id", 30, HorizontalAlignment.Left);
             lstContatos.Columns.Add("NOME", 150, HorizontalAlignment.Left);
             lstContatos.Columns.Add("EMAIL", 150, HorizontalAlignment.Left);
-            lstContatos.Columns.Add("TELEFONE", 30, HorizontalAlignment.Left);
-
+            lstContatos.Columns.Add("TELEFONE", 80, HorizontalAlignment.Left);
+            //add novos campos
+            lstContatos.Columns.Add("ENDERECO", 150, HorizontalAlignment.Left);
+            lstContatos.Columns.Add("CEP", 50, HorizontalAlignment.Left);
+            lstContatos.Columns.Add("BAIRRO", 150, HorizontalAlignment.Left);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -47,15 +48,14 @@ namespace WFGravarDados
         private void btnEnviar_Click(object sender, EventArgs e)
         {
             try
-            {
-                
-               
+            {                             
                 // Criar Conexao
-
                 Conexao = new MySqlConnection(data_source);
-                string sql = "INSERT INTO contatos (nome, email, telefone) " +
-                    "VALUES " +
-                    "('" + txtNome.Text + "', '" + txtEmail.Text + "', '" + txtTelefone.Text + "')";
+                string sql = "INSERT INTO contatos (nome, email, telefone, endereco, cep, bairro) " +
+                 "VALUES " +
+                 $"('{txtNome.Text}', '{txtEmail.Text}', '{txtTelefone.Text}', " +
+                 $"'{txtEndereco.Text}', '{txtCep.Text}', '{txtBairro.Text}')";
+
 
                 // Executar o comando Insert
 
@@ -76,10 +76,6 @@ namespace WFGravarDados
                     Conexao.Close();
                 }
             }
-
-
-
-
 
         }
 
@@ -122,6 +118,9 @@ namespace WFGravarDados
                     reader.GetString(1),
                     reader.GetString(2),
                     reader.GetString(3),
+                    reader.GetString(4),
+                    reader.GetString(5),
+                    reader.GetString(6),
                 };
                 var linha_listview = new ListViewItem(linha);
                 lstContatos.Items.Add(linha_listview);
@@ -135,18 +134,19 @@ namespace WFGravarDados
             finally
             {
                 Conexao.Close();
-            }
-
-        
+            }    
     
         }
-
         private void lstContatos_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         private void txtTelefone_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
         {
 
         }
